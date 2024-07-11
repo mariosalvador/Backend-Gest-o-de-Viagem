@@ -18,7 +18,6 @@ export const CreateTrip = async (app: FastifyInstance) => {
                     nameTriper: z.string().min(3),
                     emailTriper: z.string().email('Inválid Email!'),
                     email_ToInvite: z.array(z.string().email())
-
                 }
             )
         }
@@ -55,7 +54,6 @@ export const CreateTrip = async (app: FastifyInstance) => {
                     }
 
                 }
-
             }
         })
 
@@ -84,14 +82,11 @@ export const CreateTrip = async (app: FastifyInstance) => {
                     <p>
                         <a href=${confirmedLink}>Confirmar Viagem</a>
                     </p>
-
-                    
                 </div>
-            `
+            `.trim()
         })
 
-        console.log(nodemailer.getTestMessageUrl(message))
-
+        console.log('Email: '+nodemailer.getTestMessageUrl(message))
         return { tripId: trip.id }
     })
 }
