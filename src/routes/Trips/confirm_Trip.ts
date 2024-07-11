@@ -3,8 +3,8 @@ import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import nodemailer from "nodemailer";
 import z from "zod";
-import { GetMailClient } from "../lib/mail";
-import { prisma } from "../lib/prisma";
+import { GetMailClient } from "../../lib/mail";
+import { prisma } from "../../lib/prisma";
 
 
 export const ConfirmTrip = async (app: FastifyInstance) => {
