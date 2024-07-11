@@ -4,6 +4,8 @@ import { serializerCompiler, validatorCompiler } from "fastify-type-provider-zod
 import { ConfirmParticipants } from "./routes/confirm_Participants";
 import { ConfirmTrip } from "./routes/confirm_Trip";
 import { CreateTrip } from "./routes/create_Trip";
+import { CreateActivity } from './routes/create_Activity';
+import { GetActivity } from './routes/get_Activity';
 
 
 
@@ -19,6 +21,8 @@ app.register(cors,{
 app.register(CreateTrip);
 app.register(ConfirmTrip);
 app.register(ConfirmParticipants)
+app.register(CreateActivity)
+app.register(GetActivity);
 
 app.listen({port:3333}).then(()=>{
     console.log("Servidor rodando!")
