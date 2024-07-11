@@ -6,6 +6,8 @@ import { ConfirmTrip } from "./routes/confirm_Trip";
 import { CreateTrip } from "./routes/create_Trip";
 import { CreateActivity } from './routes/create_Activity';
 import { GetActivity } from './routes/get_Activity';
+import { CreateLink } from './routes/create_Links';
+import { GetLinks } from './routes/get_Link';
 
 
 
@@ -21,8 +23,12 @@ app.register(cors,{
 app.register(CreateTrip);
 app.register(ConfirmTrip);
 app.register(ConfirmParticipants)
+
 app.register(CreateActivity)
 app.register(GetActivity);
+
+app.register(CreateLink)
+app.register(GetLinks)
 
 app.listen({port:3333}).then(()=>{
     console.log("Servidor rodando!")
