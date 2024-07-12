@@ -3,6 +3,7 @@ import { ZodTypeProvider } from "fastify-type-provider-zod";
 import z from "zod";
 import { prisma } from "../../lib/prisma";
 import dayjs from "dayjs";
+import { ClientError } from "../../errors/clientError";
 
 
 
@@ -32,7 +33,7 @@ export const GetActivity = async (app: FastifyInstance) => {
             })
 
             if (!trip) {
-                throw new Error('Invalid trip!')
+                throw new ClientError('Invalid trip!')
             }
 
             const differenceBetweenTripStartAndEnd = dayjs(trip.end_at).diff(trip.start_at, 'days')

@@ -2,6 +2,9 @@ import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import z from "zod";
 import { prisma } from "../../lib/prisma";
+import { ClientError } from "../../errors/clientError";
+import { env } from "../../utils/env_validation";
+
 
 
 
@@ -23,13 +26,13 @@ export const ConfirmParticipants = async (app: FastifyInstance) => {
                 where:{id:participantID},
             })
 
-            const url: string = `http://localhost:3000/trip/${participant?.tripId}`;
+            const url: string = `${env.WEB_BASE_URL}/trip/${participant?.tripId}`;
             const redirected = reply.redirect(url)
 
           
 
             if(!participant)
-                throw new Error('Participant not found!');
+                throw new ClientError('Participant not found!');
             
 
             if(participant.is_confirmed)

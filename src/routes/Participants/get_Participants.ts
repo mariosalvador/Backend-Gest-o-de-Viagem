@@ -6,8 +6,10 @@ import { ClientError } from "../../errors/clientError";
 
 
 
-export const GetLinks = async (app: FastifyInstance) => {
-    app.withTypeProvider<ZodTypeProvider>().get(`/trip/:tripid/links`,
+
+
+export const GetParticipants = async (app: FastifyInstance) => {
+    app.withTypeProvider<ZodTypeProvider>().get(`/trip/:tripid/participants`,
         {
             schema: {
                 params: z.object({
@@ -21,7 +23,14 @@ export const GetLinks = async (app: FastifyInstance) => {
             const trip = await prisma.trip.findUnique({
                 where: { id: tripid },
                 include: {
-                    links: true
+                    participants: {
+                        select: {
+                            id: true,
+                            name: true,
+                            email: true,
+                            is_confirmed: true
+                        }
+                    }
                 }
             })
 
@@ -31,6 +40,6 @@ export const GetLinks = async (app: FastifyInstance) => {
 
 
 
-            return { linksId: trip.links }
+            return { parcipants: trip.participants }
         })
 }

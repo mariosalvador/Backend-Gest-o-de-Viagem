@@ -2,6 +2,7 @@ import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import z from "zod";
 import { prisma } from "../../lib/prisma";
+import { ClientError } from "../../errors/clientError";
 
 
 
@@ -27,7 +28,7 @@ export const CreateLink = async (app: FastifyInstance) => {
             })
 
             if (!trip)
-                throw new Error('Trip Not Found!')
+                throw new ClientError('Trip Not Found!')
 
             const link = await prisma.link.create({
                 data: {

@@ -5,6 +5,9 @@ import nodemailer from "nodemailer";
 import z from "zod";
 import { GetMailClient } from "../../lib/mail";
 import { prisma } from "../../lib/prisma";
+import { ClientError } from "../../errors/clientError";
+import { env } from "../../utils/env_validation";
+
 
 
 export const ConfirmTrip = async (app: FastifyInstance) => {
@@ -17,7 +20,7 @@ export const ConfirmTrip = async (app: FastifyInstance) => {
     },
         async (request, reply) => {
             const { tripid } = request.params;
-            const url: string = `http://localhost:3000/trip/${tripid}`;
+            const url: string = `${env.WEB_BASE_URL}/trip/${tripid}`;
             const redirected = reply.redirect(url)
 
             const trip = await prisma.trip.findUnique({
@@ -34,7 +37,7 @@ export const ConfirmTrip = async (app: FastifyInstance) => {
             })
 
             if (!trip) {
-                throw new Error('Trip not found!')
+                throw new ClientError('Trip not found!')
             }
 
 
@@ -58,7 +61,7 @@ export const ConfirmTrip = async (app: FastifyInstance) => {
             await Promise.all(
                 trip.participants.map(async (participant) => {
 
-                    const confirmedLink = `http://localhost:3333/participants/${participant.id}/confirm`;
+                    const confirmedLink = `${env.API_BASE_URL}/participants/${participant.id}/confirm`;
 
                     const message = await mail.sendMail({
                         from: {
